@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class Cliente{
     public static void main(String[] args) {
-        String ip = "10.192.41.113";
+        String ip = "10.192.41.219";
         int port = 5002;
 
         try (Socket socket = new Socket(ip, port);
