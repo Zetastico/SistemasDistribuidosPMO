@@ -16,9 +16,11 @@ public class ServerOperacion {
     public static void main(String[] args) {
         int port = 5002;
         ServerSocket server;
-        while (true) {
-            try {
-                server = new ServerSocket(port);
+        
+        try {
+            server = new ServerSocket(port);
+            while (true) {
+                
                 System.out.println("Se inicio el servidor con éxito");
                 Socket client;
                 PrintStream toClient;
@@ -30,10 +32,12 @@ public class ServerOperacion {
                 toClient = new PrintStream(client.getOutputStream());
                 String respuesta = procesarSolicitud(recibido);
                 toClient.println(respuesta);
+                
+                client.close();
 
-            } catch (IOException ex) {
+            } 
+        }catch (IOException ex) {
                 System.out.print(ex.getMessage());
-            }
         }
     }
 
@@ -69,7 +73,12 @@ public class ServerOperacion {
                 default: 
                     return "Operacion no valida";
             }
+            
+            
             return String.valueOf(resultado);
+            
+            
+            
         } catch (Exception e) {
             return "Error en el formato del protocolo";
         }

@@ -20,9 +20,10 @@ public class ServerOperacion {
     public static void main(String[] args) {
         int port = 5002;
         ServerSocket server;
-        while (true) {
-            try {
-                server = new ServerSocket(port);
+        try {
+            server = new ServerSocket(port);
+            while (true) {
+                
                 System.out.println("Se inicio el servidor con éxito");
                 Socket client;
                 PrintStream toClient;
@@ -72,9 +73,10 @@ public class ServerOperacion {
                 
                 toClient.println(respuesta);
 
-            } catch (IOException ex) {
+                client.close();
+            } 
+        }catch (IOException ex) {
                 System.out.print(ex.getMessage());
             }
-        }
     }
 }

@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class Cliente {
     public static void main(String[] args) {
         String ip = "10.192.41.219";
-        int port = 5002;
+        int port = 5003;
 
         try (Socket socket = new Socket(ip, port);
              PrintStream toServer = new PrintStream(socket.getOutputStream());
