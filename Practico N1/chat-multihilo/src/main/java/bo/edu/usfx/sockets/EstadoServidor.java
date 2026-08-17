@@ -21,7 +21,7 @@ public class EstadoServidor {
     
     private final Set<String> apodos = ConcurrentHashMap.newKeySet();
     
-    // Contadores atómicos para el Requisito técnico 4
+    // contadores atomicos para el Requisito tecnico 4
     private final Map<String, ManejadorCliente> clientesPorApodo = new ConcurrentHashMap<>();
     
     private final AtomicInteger conexionesHistoricas = new AtomicInteger(0);
