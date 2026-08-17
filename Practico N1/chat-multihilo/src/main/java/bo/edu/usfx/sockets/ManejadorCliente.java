@@ -51,8 +51,9 @@ public class ManejadorCliente implements Runnable {
             this.salaActual = estado.getSalas().get("general");
             this.salaActual.agregarMiembro(this);
 
-            out.println("Bienvenido al Chat. Tu apodo actual es: " + apodo);
             out.println("Estas en la sala: " + salaActual.getNombre());
+            out.println("Apodo actual: " + apodo);
+            
 
             String linea;
             while ((linea = in.readLine()) != null) {
@@ -72,22 +73,27 @@ public class ManejadorCliente implements Runnable {
     private boolean procesarComando(String linea) {
         String[] partes = linea.split(" ", 2);
         String comando = partes[0].toLowerCase();
-        String arg = partes.length > 1 ? partes[1].trim() : "";
+        String arg;
+        if (partes.length > 1) {
+            arg = partes[1].trim();
+        } else {
+            arg = "";
+        }
 
         switch (comando) {
             case "/nick":
                 if (arg.isEmpty()) {
                     out.println("Uso: /nick <apodo>");
                 } else if (estado.registrarApodo(arg, this.apodo, this)) {
-                    out.println("Apodo cambiado a: " + arg);
+                    out.println("nuevo apodo: " + arg);
                     this.apodo = arg;
                 } else {
-                    out.println("Error: El apodo '" + arg + "' ya esta en uso.");
+                    out.println("el apodo '" + arg + "' ya esta en uso.");
                 }
                 break;
 
             case "/salas":
-                out.println("--- SALAS DISPONIBLES ---");
+                out.println("Salas Disponibles:");
                 estado.getSalas().forEach((nombre, sala) -> 
                     out.println("- " + nombre + " (" + sala.getMiembros().size() + " usuarios)")
                 );
@@ -95,10 +101,17 @@ public class ManejadorCliente implements Runnable {
 
             case "/crear":
                 if (arg.isEmpty()) {
+                    
+                    
                     out.println("Uso: /crear <nombre_sala>");
+                    
+                    
                 } else if (estado.getSalas().containsKey(arg)) {
-                    out.println("Error: La sala ya existe.");
+                    
+                    out.println("La sala ya existe.");
+                    
                 } else {
+                    
                     Sala nuevaSala = new Sala(arg);
                     estado.getSalas().put(arg, nuevaSala);
                     cambiarDeSala(nuevaSala);
@@ -109,14 +122,14 @@ public class ManejadorCliente implements Runnable {
                 if (arg.isEmpty()) {
                     out.println("Uso: /unirse <nombre_sala>");
                 } else if (!estado.getSalas().containsKey(arg)) {
-                    out.println("Error: La sala no existe.");
+                    out.println("La sala no existe.");
                 } else {
                     cambiarDeSala(estado.getSalas().get(arg));
                 }
                 break;
 
             case "/quien":
-                out.println("--- USUARIOS EN " + salaActual.getNombre().toUpperCase() + " ---");
+                out.println("Usuarion en: " + salaActual.getNombre().toUpperCase());
                 for (ManejadorCliente m : salaActual.getMiembros()) {
                     out.println("- " + m.getApodo());
                 }
@@ -132,20 +145,20 @@ public class ManejadorCliente implements Runnable {
                         destino.enviarMensaje("[Privado de " + apodo + "]: " + privPartes[1]);
                         out.println("[Privado a " + privPartes[0] + "]: " + privPartes[1]);
                     } else {
-                        out.println("Error: Usuario no encontrado.");
+                        out.println("Usuario no encontrado.");
                     }
                 }
                 break;
 
             case "/estado":
-                out.println("--- ESTADO DEL SERVIDOR ---");
+                out.println("Estado del Servidor");
                 out.println("Usuarios conectados: " + estado.getClientesActivos());
                 out.println("Total conexiones historicas: " + estado.getConexionesHistoricas());
                 out.println("Cantidad de salas: " + estado.getSalas().size());
                 break;
 
             case "/salir":
-                return true; // Rompe el ciclo
+                return true;
 
             default:
                 out.println("Comando no reconocido. Comandos: /nick, /salas, /crear, /unirse, /quien, /privado, /estado, /salir");
@@ -158,13 +171,13 @@ public class ManejadorCliente implements Runnable {
         salaActual.removerMiembro(this);
         this.salaActual = nuevaSala;
         salaActual.agregarMiembro(this);
-        salaActual.difundir("*** " + apodo + " se unio a la sala ***", this);
+        salaActual.difundir(apodo + " se unio a la sala", this);
         out.println("Te has unido a la sala: " + nuevaSala.getNombre());
     }
 
     private void desconectar() {
         if (salaActual != null) {
-            salaActual.difundir("*** " + apodo + " se ha desconectado ***", esteCliente());
+            salaActual.difundir(apodo + " se ha desconectado", esteCliente());
             salaActual.removerMiembro(this);
         }
         estado.removerApodo(this.apodo);
