@@ -24,7 +24,7 @@ public class Cliente{
              BufferedReader fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              Scanner scanner = new Scanner(System.in)) {
 
-            System.out.print("Ingrese trama (SUM-10-5 o RES-20-4): ");
+            System.out.print("Ingrese trama (SUM-10-5 o RES-20-4, MUL, DIV): ");
             String trama = scanner.nextLine();
 
             toServer.println(trama);
