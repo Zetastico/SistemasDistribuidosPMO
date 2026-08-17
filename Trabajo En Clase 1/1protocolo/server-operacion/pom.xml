@@ -10,4 +10,5 @@
         <maven.compiler.release>25</maven.compiler.release>
         <exec.mainClass>com.sis258.server.operacion.ServerOperacion</exec.mainClass>
     </properties>
+    <name>1. server-operacion</name>
 </project>

@@ -18,46 +18,63 @@ import java.net.Socket;
 public class ServerOperacion {
 
     public static void main(String[] args) {
-         int port = 5002;
+        int port = 5002;
         ServerSocket server;
         while (true) {
-        try {
-            // TODO code application logic here
-            server = new ServerSocket(port);
-            System.out.println("Se inicio el servidor con éxito");
-            Socket client;
-            PrintStream toClient;
-            client = server.accept(); //conexion entre cliente y servidor para comunicacion bidireccional
-            BufferedReader fromClient = new BufferedReader(new InputStreamReader(client.getInputStream())); // el lector
-            System.out.println("Cliente se conecto");
-            String recibido = fromClient.readLine();
-            System.out.println("El cliente envio el mensaje:" + recibido);
-            int numero1= Integer.parseInt(recibido);
-            
-            toClient = new PrintStream(client.getOutputStream());
-            
-            toClient.println("introduzca el segundo numero");
-            String recibido2 = fromClient.readLine();
-            int numero2= Integer.parseInt(recibido2);
-            toClient.println("1.suma 2.resta 3. multiplicacion 4, division .introduzca la operacion");
-            String recibido3 = fromClient.readLine();
-            int resultado=0;
-            switch (recibido3) {
-                case "suma": resultado=numero1+numero2;
-                 break;
-                case "restar": resultado=numero1+numero2;
-                 break; 
-                 
-                    
-            }
-            
-            
-           
-            toClient.println(String.valueOf(resultado));
+            try {
+                server = new ServerSocket(port);
+                System.out.println("Se inicio el servidor con éxito");
+                Socket client;
+                PrintStream toClient;
+                client = server.accept(); 
+                BufferedReader fromClient = new BufferedReader(new InputStreamReader(client.getInputStream())); 
+                System.out.println("Cliente se conecto");
+                String recibido = fromClient.readLine();
+                System.out.println("El cliente envio el mensaje:" + recibido);
+                int numero1 = Integer.parseInt(recibido);
+                
+                toClient = new PrintStream(client.getOutputStream());
+                
+                toClient.println("introduzca el segundo numero");
+                String recibido2 = fromClient.readLine();
+                int numero2 = Integer.parseInt(recibido2);
+                
+                toClient.println("1.suma 2.resta 3. multiplicacion 4, division .introduzca la operacion");
+                String recibido3 = fromClient.readLine();
+                String respuesta;
 
-        } catch (IOException ex) {
-            System.out.print(ex.getMessage());
-        }
+                switch (recibido3.toLowerCase()) {
+                    case "suma": case "1":
+                        respuesta = String.valueOf(numero1 + numero2);
+                        break;
+                        
+                    case "resta": case "2":
+                        respuesta = String.valueOf(numero1 - numero2);
+                        break; 
+                        
+                    case "multiplicacion": case "3":
+                        respuesta = String.valueOf(numero1 * numero2);
+                        break;
+                        
+                    case "division": case "4":
+                        if (numero2 != 0) {
+                            respuesta = String.valueOf(numero1 / numero2);
+                        } else {
+                            respuesta = "Error: No se puede dividir entre 0";
+                        }
+                        break;
+                        
+                    default:
+                        respuesta = "Operacion no valida";
+                        break;
+                }
+
+                
+                toClient.println(respuesta);
+
+            } catch (IOException ex) {
+                System.out.print(ex.getMessage());
+            }
         }
     }
 }
