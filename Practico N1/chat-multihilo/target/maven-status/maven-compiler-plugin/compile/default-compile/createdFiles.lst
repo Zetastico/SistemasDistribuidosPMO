@@ -1,0 +1,9 @@
+bo\edu\usfx\sockets\ServidorSecuencial.class
+bo\edu\usfx\sockets\ServidorMultihilo.class
+bo\edu\usfx\sockets\ClienteChat.class
+bo\edu\usfx\sockets\EstadoServidor.class
+bo\edu\usfx\sockets\ServidorChat.class
+bo\edu\usfx\sockets\ClienteBasico.class
+bo\edu\usfx\sockets\ManejadorCliente.class
+bo\edu\usfx\sockets\Manejador.class
+bo\edu\usfx\sockets\Sala.class
