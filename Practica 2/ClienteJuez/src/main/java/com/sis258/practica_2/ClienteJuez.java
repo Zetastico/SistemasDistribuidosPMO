@@ -20,9 +20,9 @@ public class ClienteJuez {
 
             Scanner sc = new Scanner(System.in);
             
-            // Registry reg = LocateRegistry.getRegistry("26.222.84.246", 1099);
+            Registry reg = LocateRegistry.getRegistry("26.222.84.246", 1099);
             
-            Registry reg = LocateRegistry.getRegistry(1099);
+            //Registry reg = LocateRegistry.getRegistry(1099);
             InterfazJusticia justicia =(InterfazJusticia) reg.lookup("Justicia");
 
 

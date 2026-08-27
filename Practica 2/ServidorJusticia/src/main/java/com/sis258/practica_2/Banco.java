@@ -1,16 +1,14 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.sis258.practica_2;
 
 /**
  *
  * @author magne
  */
-public class Practica_2 {
-
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
-    }
+public enum Banco {
+    MERCANTIL,
+    BCP
 }
